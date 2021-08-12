@@ -31,6 +31,10 @@ Beam Quality Detector requires following packages & dependencies to run properly
 ## Usage
 
 The running environment uses [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html). Install the dependencies and devDependencies and start jupyter-notebook, more usage examples can be viewed in use_case_example.ipynb.
+```sh
+conda env create -f environment.yml
+conda activate laser_beam
+```
 
 ## License
 
