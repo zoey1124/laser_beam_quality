@@ -44,7 +44,25 @@ class CustomImageDataset(Dataset):
         label = self.label[idx]
         return image, label
 
-
+def get_dataloader(dset, batch_size, validation_split, random_seed):
+    """
+    dset: CustomDataset type
+    batch_size: int
+    validation_split: float, represent percentage of dataset used as validation
+    """
+    dataset_size = len(dset)
+    indices = list(range(dataset_size))
+    split = int(np.floor(validation_split * dataset_size))
+    np.random.seed(random_seed)
+    np.random.shuffle(indices)
+    train_indices, val_indices = indices[split:], indices[:split]
+    # Creating data samplers and loaders
+    train_sampler = SubsetRandomSampler(train_indices)
+    valid_sampler = SubsetRandomSampler(val_indices)
+  
+    train_loader = torch.utils.data.DataLoader(dset, batch_size=batch_size, sampler=train_sampler, num_workers=4)
+    valid_loader = torch.utils.data.DataLoader(dset, batch_size=batch_size, sampler=valid_sampler, num_workers=4)
+    return train_loader, valid_loader
 
 ###########
 #  Model  #
