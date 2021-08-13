@@ -228,3 +228,18 @@ def compare_acc(files):
     plt.ylabel("Accuracy")
     plt.legend()
     plt.show()
+
+
+def load_model(model_type):
+    model = None
+    if model_type == 'CNN_128':
+        model = CNN_128()
+    elif model_type == 'CNN_28_1':
+        model = CNN_28_1()
+    elif model_type == 'CNN_28_2':
+        model = CNN_28_2()
+    else:
+        raise Exception("model type not recognized.")
+    model.load_state_dict(torch.load(model_type + '.pth'))
+    return model
+

@@ -88,6 +88,7 @@ def compare_ref(ref, run_dir, threshold):
     ref - 2d array or np array as the referenced laser beam quality that we want to compare to.
     run_fir - the xtc file directory for all events we want to compare to
     threshold - integer. If difference value exceed threshold, will report aberration
+    return: true if there is an aberration; false otherwise
     """
     if not type(ref) is np.ndarray:
         ref = np.array(ref)
@@ -99,5 +100,6 @@ def compare_ref(ref, run_dir, threshold):
         diff = abs(img - ref)
         if (diff > threshold).any():
             print("In event {}, there is an aberration.".format(i))
-            return
+            return True
     print("No Aberration!")
+    return False
