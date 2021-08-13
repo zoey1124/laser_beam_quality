@@ -152,15 +152,19 @@ class CNN_28_2(nn.Module):
         x = self.fc2(x)
         return F.log_softmax(x)
 
+model_map = {'CNN_128': CNN_128(), 'CNN_28_1': CNN_28_1(), 'CNN_28_2': CNN_28_2()}
 
 ###########
 #  Train  #
 ###########
-def train(model_name, model, train_loader, valid_loader, num_epochs = 1):
+def train(model_name, train_loader, valid_loader, num_epochs = 1):
     """
     model_name: string type. Must choose from 1.CNN_128 2.CNN_28_1 3.CNN_28_2
     num_epochs: int type. The total number of training epochs 
     """
+    if model_name not in model_map.keys():
+        raise Exception("model_name must be 'CNN_128', 'CNN_28_1', or 'CNN_28_2'!")
+    model = model_map['model_name']
     optim = torch.optim.SGD(model.parameters(), lr = 0.001)
     criterian = nn.CrossEntropyLoss()
     
@@ -234,7 +238,7 @@ def train(model_name, model, train_loader, valid_loader, num_epochs = 1):
         
     print("Train complete.")
     print("Total Elapsed Time: {}".format(time.time() - start_time))
-
+    return model
 
 #################
 #  Performance  #
