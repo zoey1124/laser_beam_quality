@@ -44,7 +44,7 @@ class CustomImageDataset(Dataset):
         label = self.label[idx]
         return image, label
 
-def get_dataloader(dset, batch_size, validation_split, random_seed):
+def get_dataloader(dset, validation_split, batch_size=16, random_seed=0):
     """
     dset: CustomDataset type
     batch_size: int
