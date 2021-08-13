@@ -20,6 +20,9 @@ from torchvision import transforms
 from torchvision import models
 import time
 
+#############
+#  DataSet  #
+#############
 
 class CustomImageDataset(Dataset):
     def __init__(self, img_dir, transform=None):
@@ -47,6 +50,9 @@ class CustomImageDataset(Dataset):
 #  Model  #
 ###########
 class CNN_128(nn.Module):
+    """
+    The image in dataset should be 128 * 128.
+    """
     def __init__(self):
         super(CNN, self).__init__()
         self.layer1 = nn.Sequential(
@@ -79,6 +85,9 @@ class CNN_128(nn.Module):
 
 
 class CNN_28_1(nn.Module):
+    """
+    The input image should be 28 * 28.
+    """
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 32, 3, 1)
@@ -105,6 +114,9 @@ class CNN_28_1(nn.Module):
 
 
 class CNN_28_2(nn.Module):
+    """
+    The input image should be 28 * 28.
+    """
     def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
@@ -126,7 +138,11 @@ class CNN_28_2(nn.Module):
 ###########
 #  Train  #
 ###########
-def train(model_name, model, num_epochs = 1):
+def train(model_name, model, train_loader, valid_loader, num_epochs = 1):
+    """
+    model_name: string type. Must choose from 1.CNN_128 2.CNN_28_1 3.CNN_28_2
+    num_epochs: int type. The total number of training epochs 
+    """
     optim = torch.optim.SGD(model.parameters(), lr = 0.001)
     criterian = nn.CrossEntropyLoss()
     
